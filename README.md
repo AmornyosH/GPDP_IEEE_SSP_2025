@@ -29,6 +29,7 @@ To run the evaluation in standard setting (no uncertainty, no distribution shift
 ```
 python main.py --alg [...] --task testing --eval_mode standard --rendering [...]
 ```
+![gpdp_standard](https://github.com/AmornyosH/GPDP_IEEE_SSP_2025/blob/main/GPDP_standard.gif)
 ### Evaluation (Shifted)
 To run the evaluation in distribution shifts setting, please refer to this command...
 ```
