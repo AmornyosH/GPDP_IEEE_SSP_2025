@@ -36,6 +36,11 @@ To run the evaluation in distribution shifts setting, please refer to this comma
 python main.py --alg [...] --task testing --eval_mode shifted --rendering [...]
 ```
 
+## 2. More detail on experiment and comparing algorithms
+### Reproduction of Soft Actor-Critic algorithm
+We reproduce Soft Actor-Critic (SAC) by using the source code from [pytorch-soft-actor-critic](https://github.com/pranz24/pytorch-soft-actor-critic).
+The code was slightly modified to suit our code structure and training/testing conditions.  
+
 
 
 
