@@ -20,10 +20,17 @@ PyTorch, MuJoCo, Gymnasium are strictly required packages. Other supporting pack
 --rendering [...]      'Rendering: Replace [...] with "render", "no-render", default: "no-render"'
 ```
 ### Training
-To run the training, please refer to this command...
+In order to make the git push possible, we drop the dataset created from SAC and SAC'buffers from the repository. 
+Therefore, All the trained agents are already provided. 
+However, if the new training is required, please create the dataset first by referring to the following command:
+```
+python dataset_creation_walker2d.py
+```
+To run the training of GPDP, please refer to this command...
 ```
 python main.py --alg GPDP --task training --gradient_step 2e+06
 ```
+
 ### Evaluation (Standard)
 To run the evaluation in standard setting (no uncertainty, no distribution shifts), please refer to this command...
 ```
