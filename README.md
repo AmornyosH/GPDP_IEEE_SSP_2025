@@ -4,8 +4,8 @@ Authors: Amornyos Horprasert, Esa Apriaskar, Xingyu Liu, Lanlan Su, Lyudmila S. 
 (Link: TBD) <br />
 
 This repository provides <br />
-1. An official PyTorch implementation of Gaussian Process Diffusion Policy (GPDP).  <br />
-2. More detail on experiment and comparing algorithms. <br />
+1. A PyTorch implementation of Gaussian Process Diffusion Policy (GPDP).  <br />
+2. More detail on the implementation, experiment, and baseline algorithms. <br />
 
 ## 1. A PyTorch Implementation
 This project was conducted in Python language. If you prefer other kind of programming language, for such as, C++, R and etc...
@@ -46,20 +46,48 @@ To run the training of GPDP, please refer to this command...
 python main.py --alg GPDP --task training --gradient_step 2e+06
 ```
 
-## 2. More detail on experiment and comparing algorithms
-### Our Implementation of Soft Actor-Critic algorithm
+## 2. More detail on the implementation, experiment, and baseline algorithms
+### Further Implementation Details of Gaussian Process Diffusion Policy Algorithm (Ours)
+As stated in the paper that more implementation details are going to be provided online. 
+Here, we explain the hyperparameters setting in detail as well as the training and deployment algorithms.
+
+| Hyperparameter | Value | Remark |
+| -------------- | ----- | ----- |
+|   Number of Nodes   | 256 | Number of nodes(neurons) in each layers. |
+|   Activation Function   | Mish | The activation node is placed at the end of each layer. |
+|   Learning Rate (*NNs)   | 3e-04 | Applied to all neural networks. |
+|   Gradient Step   | 2e+06 | - |
+|   $\gamma$   | 0.99 | Discount factor |
+|   $\tau$   | 0.7 | Expectile value for Q-learning |
+|   $\eta$   | 0.005 | Soft updating parameter |
+|   Minibatch Size   | 256 | - |
+|   Noise Schedule   | **VP-SDE | - |
+|   $N$   | 5 | Number of Diffusion step |
+|   $\beta_{\text{max}}$   | 10.00 | - |
+|   $\beta_{\text{min}}$   | 0.10 | - |
+
+*NNs = Neural Networks <br />
+**VP-SDE = Variance Preserving Stochastic Differential Equation (cite...) <br />
+
+### Further Implementation Details of Soft Actor-Critic Algorithm
 We implement Soft Actor-Critic (SAC) based on the source code from [pytorch-soft-actor-critic](https://github.com/pranz24/pytorch-soft-actor-critic).
 The code was modified to suit our code structure and training/testing conditions.  
 
-### Our Implementation of Diffusion Q-Learning algorithm
-We implement Diffusion Q-Learning (D-QL) algorithm, proposed in ..., by implementing our own source codes in PyTorch.
-All function approximators in D-QL share the same architecture with our apporach (GPDP), which are declared in the paper.
-Here, we would like to share the hyperparameters setting for D-QL as the following:
-- Number of gradient step: 1e+06 (Early stop)
-- $\alpha$ = 1.00 (Normalise constant for Q-values term in the policy objective function.) 
+### Further Implementation Details of Diffusion Q-Learning Algorithm
+We implemented Diffusion Q-Learning (D-QL) algorithm, proposed in .... , ourselves (PyTorch-based).
+All function approximators in D-QL share the same architecture with GPDP.
+Here, we would like to share some special hyperparameters setting for D-QL that does not get declared in the paper as the following:
+
+| Hyperparameter | Value | Remark |
+| -------------- | ----- | ----- |
+|   $\alpha$  | 1.00 | Normalised constant for Q-value term in the policy's objective function. |
+|   $\gamma$   | 0.99 | Discount factor |
+|   Learning rate | 3e-04 | Applied to all networks |
+|   $\eta$  | 0.005 | Soft updating parameter |
+|   Gradient step   | 1e+06 | Early stopping |
 
 The results of D-QL quoted in the paper are from the best model selected by online selection method.
-We performed online evaluation for every 10 epoch (~39k steps), then selects the checkpoint models that provide best non-discounted return.
+We performed online evaluation for every 10 epoch (~39k steps), then selected the checkpoint models that provide the best non-discounted return.
 We first set the same gradient step as our approach (~2M steps) but we spot degradation in the performance, so we early stop the training by ~1M steps. 
 
 ### Additional Details on The Standard Evaluation
