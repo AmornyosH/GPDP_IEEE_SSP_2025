@@ -55,8 +55,8 @@ Here, we explain the hyperparameters setting in detail as well as the training a
 | -------------- | ----- | ----- |
 |   Number of Nodes   | 256 | Number of nodes(neurons) in each layers. |
 |   Activation Function   | Mish | The activation node is placed at the end of each layer. |
-|   Learning Rate (*NNs)   | 3e-04 | Applied to all neural networks. |
-|   Gradient Step   | 2e+06 | - |
+|   Learning Rate (*NNs)   | 3e-04 | Applied to all neural network's optimizers. |
+|   Gradient Step (*NNs)  | 2e+06 | - |
 |   $\gamma$   | 0.99 | Discount factor |
 |   $\tau$   | 0.7 | Expectile value for Q-learning |
 |   $\eta$   | 0.005 | Soft updating parameter |
@@ -65,9 +65,12 @@ Here, we explain the hyperparameters setting in detail as well as the training a
 |   $N$   | 5 | Number of Diffusion step |
 |   $\beta_{\text{max}}$   | 10.00 | - |
 |   $\beta_{\text{min}}$   | 0.10 | - |
+|   Learning Rate (***GPs)   | 1e-02 | Applied to Gaussian Processes's optimizer. |
+|   Gradient Step (***GPs)  | 2e+06 | - |
 
 *NNs = Neural Networks <br />
 **VP-SDE = Variance Preserving Stochastic Differential Equation (cite...) <br />
+***GPs = Gaussian Processes <br />
 
 ### Further Implementation Details of Soft Actor-Critic Algorithm
 We implement Soft Actor-Critic (SAC) based on the source code from [pytorch-soft-actor-critic](https://github.com/pranz24/pytorch-soft-actor-critic).
@@ -82,9 +85,9 @@ Here, we would like to share some special hyperparameters setting for D-QL that 
 | -------------- | ----- | ----- |
 |   $\alpha$  | 1.00 | Normalised constant for Q-value term in the policy's objective function. |
 |   $\gamma$   | 0.99 | Discount factor |
-|   Learning rate | 3e-04 | Applied to all networks |
+|   Learning Rate | 3e-04 | Applied to all neural network's optimizers. |
 |   $\eta$  | 0.005 | Soft updating parameter |
-|   Gradient step   | 1e+06 | Early stopping |
+|   Gradient Step   | 1e+06 | Early stopping |
 
 The results of D-QL quoted in the paper are from the best model selected by online selection method.
 We performed online evaluation for every 10 epoch (~39k steps), then selected the checkpoint models that provide the best non-discounted return.
